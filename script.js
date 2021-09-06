@@ -1,23 +1,23 @@
 //letting it be empty
 let myLibrary = [
-    // {
-    //     title: "red rising",
-    //     author: "martin",
-    //     pages: 400,
-    //     isRead: true,
-    // },
-    // {
-    //     title: "hunger games",
-    //     author: "jk rollling",
-    //     pages: 340,
-    //     isRead: false,
-    // },
-    // {
-    //     title: "game of thrones",
-    //     author: "rr something",
-    //     pages: 1230,
-    //     isRead: true,
-    // },
+    {
+        title: "red rising",
+        author: "martin",
+        pages: 400,
+        isRead: true,
+    },
+    {
+        title: "hunger games",
+        author: "jk rollling",
+        pages: 340,
+        isRead: false,
+    },
+    {
+        title: "game of thrones",
+        author: "rr something",
+        pages: 1230,
+        isRead: true,
+    },
 ];
 
 function Book(title, author, pages, isRead) {
@@ -53,8 +53,9 @@ function addBookToLibrary(event) {
     // for queryselector, just get the #id and then the tag type
     let bookDescription = document.querySelector("#new-book pre");
     let allBooks = document.querySelector("#book-data pre");
-    bookDescription.textContent = "\n" + JSON.stringify(newBook, "\t", 2);
-    allBooks.textContent = "\n" + JSON.stringify(myLibrary, "\t", 2);
+    // displays books, testing
+    // bookDescription.textContent = "\n" + JSON.stringify(newBook, "\t", 2);
+    // allBooks.textContent = "\n" + JSON.stringify(myLibrary, "\t", 2);
 }
 
 function displayTable() {
@@ -74,6 +75,14 @@ function displayTable() {
             if (attr === "delete") {
                 //make button
                 cell.innerHTML = '<input class="delete-btn" type="button" value="Delete" />';
+            } else if (attr == "isRead") {
+                let buttonStyle = ``;
+                if (element[attr]) {
+                    buttonStyle = `green`;
+                } else {
+                    buttonStyle = `red`;
+                }
+                cell.innerHTML = `<input class="read-btn" type="button" value="Read" style="background-color:${buttonStyle}" />`;
             } else {
                 cell.innerHTML = element[attr];
             }
@@ -95,24 +104,77 @@ function onDeleteRow(event) {
         return;
     }
 
-    alert("delete button clicked");
+    // alert("delete button clicked");
     const btn = event.target;
     //gets the closest element
     // take current row
-    btn.closet("tr");
+    let row = btn.closest("tr");
+    console.log(row.cells[0].innerHTML);
+    let index = row.rowIndex;
+    console.log(index);
+
+    row.remove();
+    //removing from data
+    if (index > -1) {
+        myLibrary.splice(index - 1, 1);
+    }
+    // recreate the table
+    displayTable();
+}
+
+function onUpdateRead(event) {
+    if (!event.target.classList.contains("read-btn")) {
+        return;
+    }
+
+    const btn = event.target;
+    console.log(btn.style.backgroundColor);
+
+    if (btn.style.backgroundColor == "green") {
+        btn.style.backgroundColor = "red";
+    } else {
+        btn.style.backgroundColor = "green";
+    }
+
+    //gets the closest element
+    // take current row
+    let row = btn.closest("tr");
+    let index = row.rowIndex;
+
+    // changing the actual value in the data
+    myLibrary[index - 1].isRead = !myLibrary[index - 1].isRead;
+    console.log(myLibrary[index - 1].isRead);
+
+    // row.remove();
+    // recreate the table
 }
 
 console.log("hello");
 // loopBooks();
 
 // making sure that the document is loaded
+
+function func() {
+    let form = document.querySelector("form");
+    let title = document.form.title.value;
+    if (title.match("[a-z]{1,5}")) {
+        document.getElementById("btn").disabled = false;
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-    let addButton = document.getElementById("btn");
+    // for testing below
+    displayTable();
+
+    // let addButton = document.getElementById("btn");
+    let formEl = document.querySelector("form");
     // on click we want to add to the array
-    addButton.addEventListener("click", addBookToLibrary);
+    formEl.addEventListener("submit", addBookToLibrary);
+    console.log("after");
     // addButton.addEventListener("click", loopBooks);
-    addButton.addEventListener("click", displayTable);
+    formEl.addEventListener("submit", displayTable);
     //we want event listeners on the table itself for when the user chooses to delete or add
     let table = document.getElementById("book-table");
     table.addEventListener("click", onDeleteRow);
+    table.addEventListener("click", onUpdateRead);
 });
