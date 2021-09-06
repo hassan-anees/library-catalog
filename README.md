@@ -1,4 +1,4 @@
-# Libary Application
+# Library Application
 
 ## Description
 
