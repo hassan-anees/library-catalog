@@ -1,0 +1,40 @@
+body {
+    margin: 0;
+    font-family: "Heebo", sans-serif;
+}
+
+.title {
+    /* display: flex; */
+    justify-content: center;
+    background-color: #fcb900;
+    padding: 2px;
+    font-size: 1.5rem;
+}
+
+.container {
+    padding: 20px;
+    /* display: flex; */
+    width: 100%;
+}
+
+.library-container {
+    padding: 20px;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 60vw;
+    text-align: center;
+}
+
+td,
+th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+/* tr:nth-child(even) {
+    background-color: #dddddd;
+} */
