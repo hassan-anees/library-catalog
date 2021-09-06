@@ -43,19 +43,7 @@ function addBookToLibrary(event) {
     let newBook = new Book(title, author, pages, isRead);
     myLibrary.push(newBook);
     console.log("book added");
-
-    //reset the form to empy when we click enter
-
     document.getElementById("bookForm").reset();
-    //OR, gets the first form
-    // document.querySelector('form').reset();
-
-    // for queryselector, just get the #id and then the tag type
-    let bookDescription = document.querySelector("#new-book pre");
-    let allBooks = document.querySelector("#book-data pre");
-    // displays books, testing
-    // bookDescription.textContent = "\n" + JSON.stringify(newBook, "\t", 2);
-    // allBooks.textContent = "\n" + JSON.stringify(myLibrary, "\t", 2);
 }
 
 function displayTable() {
@@ -144,22 +132,6 @@ function onUpdateRead(event) {
     // changing the actual value in the data
     myLibrary[index - 1].isRead = !myLibrary[index - 1].isRead;
     console.log(myLibrary[index - 1].isRead);
-
-    // row.remove();
-    // recreate the table
-}
-
-console.log("hello");
-// loopBooks();
-
-// making sure that the document is loaded
-
-function func() {
-    let form = document.querySelector("form");
-    let title = document.form.title.value;
-    if (title.match("[a-z]{1,5}")) {
-        document.getElementById("btn").disabled = false;
-    }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
