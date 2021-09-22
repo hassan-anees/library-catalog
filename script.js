@@ -20,20 +20,22 @@ let myLibrary = [
     },
 ];
 
-function Book(title, author, pages, isRead) {
-    this.id = myLibrary.length;
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.isRead = isRead;
+class Book {
+    constructor(title, author, pages, isRead) {
+        this.id = myLibrary.length;
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.isRead = isRead;
+    }
 
-    this.info = function () {
-        return `Current book: ${title}, ${author}, ${pages}, ${isRead}`;
-    };
+    info() {
+        return `Current book: ${this.title}, ${this.author}, ${this.pages}, ${this.isRead}`;
+    }
 }
 
 //event is passed from the event listener
-function addBookToLibrary(event) {
+const addBookToLibrary = (event) => {
     event.preventDefault(); //stopping the form from submitting
     let title = document.getElementById("title").value;
     let author = document.getElementById("author").value;
@@ -44,9 +46,9 @@ function addBookToLibrary(event) {
     myLibrary.push(newBook);
     console.log("book added");
     document.getElementById("bookForm").reset();
-}
+};
 
-function displayTable() {
+const displayTable = () => {
     let table = document.getElementById("book-table");
     while (table.rows.length > 1) {
         table.deleteRow(1);
@@ -78,15 +80,15 @@ function displayTable() {
         });
         table.appendChild(row);
     });
-}
+};
 
-function clearTable(table) {
+const clearTable = (table) => {
     while (table.rows.length > 1) {
         table.deleteRow(1);
     }
-}
+};
 
-function onDeleteRow(event) {
+const onDeleteRow = (event) => {
     // only respond to things with specific class
     if (!event.target.classList.contains("delete-btn")) {
         return;
@@ -108,9 +110,9 @@ function onDeleteRow(event) {
     }
     // recreate the table
     displayTable();
-}
+};
 
-function onUpdateRead(event) {
+const onUpdateRead = (event) => {
     if (!event.target.classList.contains("read-btn")) {
         return;
     }
@@ -132,7 +134,7 @@ function onUpdateRead(event) {
     // changing the actual value in the data
     myLibrary[index - 1].isRead = !myLibrary[index - 1].isRead;
     console.log(myLibrary[index - 1].isRead);
-}
+};
 
 document.addEventListener("DOMContentLoaded", () => {
     // for testing below
